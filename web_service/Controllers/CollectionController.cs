@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using Dapper;
-using api.Models;
+using web_service.Models;
 
-namespace api.Controllers;
+namespace web_service.Controllers;
 
 [ApiController]
 [Route("api/[controller]")] // Sets the base route to /api/collection
