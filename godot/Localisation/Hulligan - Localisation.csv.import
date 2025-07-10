@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://biggell8rrh1f"
+
+[deps]
+
+files=["res://Localisation/Hulligan - Localisation.en.translation", "res://Localisation/Hulligan - Localisation.de.translation"]
+
+source_file="res://Localisation/Hulligan - Localisation.csv"
+dest_files=["res://Localisation/Hulligan - Localisation.en.translation", "res://Localisation/Hulligan - Localisation.de.translation"]
+
+[params]
+
+compress=true
+delimiter=0
