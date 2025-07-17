@@ -8,6 +8,8 @@ namespace BattleSystem
 {
     internal class Player
     {
+        public event EventHandler SystemTurnTerminate;
+
         public event EventHandler TurnStart;
         public event EventHandler TurnEnd;
 
@@ -20,6 +22,25 @@ namespace BattleSystem
 
         public List<Card> CardsActiveEffects;
 
+        public void InvokeEffect(Card c, Effect e)
+        {
+
+        }
+
+        public void CheckInvoke(Condition condition)
+        {
+            foreach (Card c in CardsActiveEffects)
+            {
+                foreach ((Condition, Effect) con in c.conditions)
+                {
+                    if (con.Item1 == condition)
+                    {
+                        InvokeEffect(c, con.Item2);
+                    }
+                }
+            }
+        }
+
         public void StartTurn()
         {
             TurnStart.Invoke(this,null);
@@ -28,15 +49,16 @@ namespace BattleSystem
         public void EndTurn() 
         {
             TurnEnd.Invoke(this, null);
+            SystemTurnTerminate.Invoke(this, null);
         }
 
         public void EnemyTurnStart(object sender, EventArgs? e)
         {
-
+            CheckInvoke(Condition.onEnemyTurnStart);
         }
         public void EnemyTurnEnd(object sender, EventArgs? e)
         {
-
+            CheckInvoke(Condition.onEnemyTurnEnd);
         }
 
     }
