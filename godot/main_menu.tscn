@@ -22,6 +22,7 @@ offset_left = 554.0
 offset_top = 293.0
 offset_right = 621.0
 offset_bottom = 348.0
+text = "Battle"
 script = ExtResource("2_7vrkn")
 
 [node name="Collection Button" type="Button" parent="."]
@@ -30,6 +31,7 @@ offset_left = 560.0
 offset_top = 368.0
 offset_right = 644.0
 offset_bottom = 420.0
+text = "Collections"
 script = ExtResource("3_fu7sn")
 
 [node name="Exit Button" type="Button" parent="."]
@@ -38,6 +40,8 @@ offset_left = 565.0
 offset_top = 430.0
 offset_right = 632.0
 offset_bottom = 468.0
+text = "Exit
+"
 script = ExtResource("4_jix8l")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
