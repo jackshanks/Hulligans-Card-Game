@@ -1,0 +1,13 @@
+﻿services:
+  networking_service:
+    image: networking_service
+    build:
+      context: .
+      dockerfile: networking_service/Dockerfile
+
+  networking_service-1:
+    image: networking_service-1
+    build:
+      context: .
+      dockerfile: networking_service/Dockerfile
+
