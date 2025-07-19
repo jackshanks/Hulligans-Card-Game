@@ -1,13 +1,69 @@
 ﻿services:
   networking_service:
-    image: networking_service
+    image: networking_service:latest
     build:
       context: .
       dockerfile: networking_service/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    container_name: networking_service
+    restart: unless-stopped
+    networks:
+      - app_network
+    ports:
+      - "8080:8080"  # HTTP
+      - "8081:8081"  # gRPC/RPC
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-  networking_service-1:
-    image: networking_service-1
+  web_service:
+    image: web_service:latest
     build:
       context: .
-      dockerfile: networking_service/Dockerfile
+      dockerfile: web_service/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    container_name: web_service
+    restart: unless-stopped
+    networks:
+      - app_network
+    ports:
+      - "8082:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - NETWORKING_SERVICE_URL=http://networking_service:8080
+    depends_on:
+      networking_service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+networks:
+  app_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
