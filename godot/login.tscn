@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8plhfboris3f"]
+
+[ext_resource type="Script" uid="uid://crupqdsn2buxg" path="res://scripts/LoginButton.cs" id="1_cau7c"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="login_button" type="Button" parent="." node_paths=PackedStringArray("httpRequest")]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 253.0
+offset_right = 447.0
+offset_bottom = 318.0
+text = "Login"
+script = ExtResource("1_cau7c")
+httpRequest = NodePath("HTTPRequest")
+
+[node name="auth_line" type="LineEdit" parent="login_button"]
+offset_left = -42.0
+offset_top = -59.0
+offset_right = 283.0
+offset_bottom = -21.0
+placeholder_text = "Auth code"
+
+[node name="username_line" type="LineEdit" parent="login_button"]
+layout_mode = 0
+offset_left = -42.0
+offset_top = -110.0
+offset_right = 283.0
+offset_bottom = -72.0
+placeholder_text = "Username"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="login_button"]
+
+[connection signal="pressed" from="login_button" to="login_button" method="_on_pressed"]

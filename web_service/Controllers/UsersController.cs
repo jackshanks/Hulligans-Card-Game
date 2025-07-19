@@ -17,7 +17,7 @@ public class UsersController(NpgsqlDataSource dataSource, ILogger<UsersControlle
         {
            //Connection to DB
             await using var connection = await dataSource.OpenConnectionAsync();
-            const string sql = "SELECT * FROM public.users WHERE email = @email";
+            const string sql = "SELECT user_id AS UserId, display_name AS DisplayName, email, auth FROM public.users WHERE email = @email";
             // Dapper automatically maps the columns to your user model
             var user = await connection.QueryFirstOrDefaultAsync<User>(sql, new { email });
 
