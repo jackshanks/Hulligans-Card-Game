@@ -11,17 +11,10 @@
     networks:
       - app_network
     ports:
-      - "8080:8080"  # HTTP
-      - "8081:8081"  # gRPC/RPC
+      - "9000:9000"  # gRPC/RPC
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:8080;https://+:8081
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      - ASPNETCORE_URLS=http://+:9000
     logging:
       driver: "json-file"
       options:
@@ -40,20 +33,12 @@
     networks:
       - app_network
     ports:
-      - "8082:8080"
+      - "9001:9001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:8080
-      - NETWORKING_SERVICE_URL=http://networking_service:8080
-    depends_on:
-      networking_service:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      - ASPNETCORE_URLS=http://+:9001
+      - NETWORKING_SERVICE_URL=http://networking_service:9000
+      - ConnectionStrings__DefaultConnection=${DBCONNECTION}
     logging:
       driver: "json-file"
       options:
