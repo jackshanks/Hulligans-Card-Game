@@ -11,7 +11,7 @@ public partial class LoginButton : Button
 	[Export(PropertyHint.File, "*.tscn")]
 	private string nextScenePath;
 	
-	private string requestString = "http://localhost:5003/api/Users/id?";
+	private const string requestPath = "users/id?";
 	
 	public override void _Ready()
 	{
@@ -48,7 +48,8 @@ public partial class LoginButton : Button
 		string authToken = Uri.EscapeDataString(authLine.Text);
 		string emailToken = Uri.EscapeDataString(emailLine.Text);
 		
-		httpRequest.Request($"{requestString}email={emailToken}&auth={authToken}");
+		string requestString = $"{GlobalState.HTTPString}{requestPath}email={emailToken}&auth={authToken}";
+		httpRequest.Request(requestString);
 	}
 	
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)

@@ -5,6 +5,7 @@ public partial class GlobalState : Node
 {
 	public long UserId { get; set; }
 	public string DisplayName { get; set; }
+	public const string HTTPString = "http://213.249.185.239:9001/api/";
 	
 	private const string SavePath = "user://session.json";
 	
