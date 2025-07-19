@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8plhfboris3f"]
+[gd_scene load_steps=3 format=3 uid="uid://c8plhfboris3f"]
 
-[ext_resource type="Script" uid="uid://crupqdsn2buxg" path="res://scripts/LoginButton.cs" id="1_cau7c"]
+[ext_resource type="Script" uid="uid://crupqdsn2buxg" path="res://LoginMenu/LoginButton.cs" id="1_xcq2c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cau7c"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -14,31 +16,43 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="login_button" type="Button" parent="." node_paths=PackedStringArray("httpRequest")]
+[node name="login_button" type="Button" parent="." node_paths=PackedStringArray("httpRequest", "errorLabel")]
 layout_mode = 0
 offset_left = 219.0
 offset_top = 253.0
 offset_right = 447.0
 offset_bottom = 318.0
 text = "Login"
-script = ExtResource("1_cau7c")
+script = ExtResource("1_xcq2c")
 httpRequest = NodePath("HTTPRequest")
+errorLabel = NodePath("../error_label")
+nextScenePath = "uid://udklyy7a6rn4"
 
 [node name="auth_line" type="LineEdit" parent="login_button"]
+layout_mode = 0
 offset_left = -42.0
 offset_top = -59.0
 offset_right = 283.0
 offset_bottom = -21.0
 placeholder_text = "Auth code"
 
-[node name="username_line" type="LineEdit" parent="login_button"]
+[node name="email_line" type="LineEdit" parent="login_button"]
 layout_mode = 0
 offset_left = -42.0
 offset_top = -110.0
 offset_right = 283.0
 offset_bottom = -72.0
-placeholder_text = "Username"
+placeholder_text = "Email"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="login_button"]
+timeout = 5.0
+
+[node name="error_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 328.0
+offset_right = 451.0
+offset_bottom = 371.0
+label_settings = SubResource("LabelSettings_cau7c")
 
 [connection signal="pressed" from="login_button" to="login_button" method="_on_pressed"]

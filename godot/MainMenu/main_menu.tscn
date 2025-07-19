@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://udklyy7a6rn4"]
+[gd_scene load_steps=6 format=3 uid="uid://udklyy7a6rn4"]
 
-[ext_resource type="Script" uid="uid://xdva7xhy0uee" path="res://MainMenu.cs" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://bhi6ymdtxnfiw" path="res://BattleButton.cs" id="2_7vrkn"]
-[ext_resource type="Script" uid="uid://vmfssabgj5as" path="res://CollectionButton.cs" id="3_fu7sn"]
-[ext_resource type="Script" uid="uid://cx8kb5c60l3f4" path="res://ExitButton.cs" id="4_jix8l"]
+[ext_resource type="Script" uid="uid://xdva7xhy0uee" path="res://MainMenu/MainMenu.cs" id="1_ajn5b"]
+[ext_resource type="Script" uid="uid://bhi6ymdtxnfiw" path="res://MainMenu/BattleButton.cs" id="2_po2gx"]
+[ext_resource type="Script" uid="uid://vmfssabgj5as" path="res://MainMenu/CollectionButton.cs" id="3_kbpwf"]
+[ext_resource type="Script" uid="uid://cx8kb5c60l3f4" path="res://MainMenu/ExitButton.cs" id="4_jdgnk"]
+[ext_resource type="Script" uid="uid://d4k5y83glmxhu" path="res://MainMenu/LogoutButton.cs" id="5_po2gx"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -12,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_06t4h")
+script = ExtResource("1_ajn5b")
 BattleScene = "Battle.tscn"
 CollectionScene = "Collection.tscn"
 
@@ -23,7 +24,7 @@ offset_top = 293.0
 offset_right = 621.0
 offset_bottom = 348.0
 text = "Battle"
-script = ExtResource("2_7vrkn")
+script = ExtResource("2_po2gx")
 
 [node name="Collection Button" type="Button" parent="."]
 layout_mode = 0
@@ -32,7 +33,7 @@ offset_top = 368.0
 offset_right = 644.0
 offset_bottom = 420.0
 text = "Collections"
-script = ExtResource("3_fu7sn")
+script = ExtResource("3_kbpwf")
 
 [node name="Exit Button" type="Button" parent="."]
 layout_mode = 0
@@ -42,7 +43,7 @@ offset_right = 632.0
 offset_bottom = 468.0
 text = "Exit
 "
-script = ExtResource("4_jix8l")
+script = ExtResource("4_jdgnk")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -53,6 +54,16 @@ offset_bottom = 256.0
 text = "Hulligans"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="logout_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1058.0
+offset_top = 11.0
+offset_right = 1139.0
+offset_bottom = 50.0
+text = "Logout"
+script = ExtResource("5_po2gx")
+loginScenePath = "uid://c8plhfboris3f"
 
 [connection signal="pressed" from="Battle Button" to="." method="onBattleButtonPressed"]
 [connection signal="pressed" from="Collection Button" to="." method="onCollectionButtonPressed"]
