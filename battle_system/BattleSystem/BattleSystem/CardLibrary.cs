@@ -12,17 +12,26 @@ namespace BattleSystem
         private static Mutex LibraryAccess = new();
         private static Dictionary<int, Card> Library = new();
 
+        /// <summary>
+        /// Gets a copy of the card from the library
+        /// Thread Safe
+        /// </summary>
+        /// <param name="cardId"></param>
+        /// <returns></returns>
         public static Card? LookupCard(int cardId)
         {
-            Card? card = null;
+            Card card = null;
             if (LibraryAccess.WaitOne())
             {
-                card = Library[cardId];
+                card = Library[cardId].Copy();
                 LibraryAccess.ReleaseMutex();
             }
             return card;
         }
-
+        /// <summary>
+        /// Adds a card into the library, should not be called by battle code
+        /// </summary>
+        /// <param name="card"></param>
         public static void LoadCard(Card card)
         {
             if (LibraryAccess.WaitOne())
@@ -34,9 +43,20 @@ namespace BattleSystem
     }
     public class Card
     {
-        public readonly int id;
+        public int id;
 
-        public readonly List<(Condition,Effect)> conditions;
+        public List<(Condition,Effect)> conditions;
+
+        public Card Copy()
+        {
+            return new Card(this);
+        }
+
+        public Card(Card card)
+        {
+            this.id = card.id;
+            this.conditions = card.conditions;
+        }
     }
 
     public enum Condition {

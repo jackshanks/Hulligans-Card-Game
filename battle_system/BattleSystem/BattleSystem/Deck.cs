@@ -10,41 +10,51 @@ namespace BattleSystem
     {
         public List<Card> cards { get; set; }
 
-        public void shuffle()
+        public void Shuffle()
         {
 
         }
-        public Card draw()
+        public void Draw(Hand h)
         {
-            return cards[0];
+            Card c = cards[0];
+            cards.RemoveAt(0);
+
+            h.hand.Add(c);
+            h.LastDrawnCard = c;
         }
-        public void search()
+        public void Search()
         {
 
         }
-        public void view()
+        public void View()
         {
 
         }
     }
-    internal class Graveyard
+    public class Graveyard
     {
         public List<Card> cards { get; set; }
     }
-    internal class Exiled
+    public class Exiled
     {
         public List<Card> cards { get; set; }
     }
-    internal class Bench
+    public class Bench
     {
         public List<Card> benched;
     }
-    internal class Arena
+    public class Arena
     {
         public List<Card> combatants;
     }
-    internal class Field
+    public class Field
     {
         public Card fieldEffect;
+    }
+    public class Hand
+    {
+        public List <Card> hand;
+
+        public Card LastDrawnCard;
     }
 }

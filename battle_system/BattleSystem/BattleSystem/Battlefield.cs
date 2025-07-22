@@ -8,16 +8,14 @@ namespace BattleSystem
 {
     internal class Battlefield
     {
+        bool BattleComplete = false;
         public Battlefield()
         {
-            player1 = new Player();
-            player2 = new Player();
+            player1 = new Player(null);
+            player2 = new Player(null);
             
-            player1.TurnStart += player2.EnemyTurnStart;
-            player2.TurnStart += player1.EnemyTurnStart;
-            
-            player1.TurnEnd += player2.EnemyTurnEnd;
-            player2.TurnEnd += player1.EnemyTurnEnd;
+            player1.SetEnemy(player2);
+            player2.SetEnemy(player1);
         }
 
         int turnCount = 0;
@@ -25,11 +23,19 @@ namespace BattleSystem
         public Player player1;
         public Player player2;
 
-        public void runNextTurn()
+        public async Task StartBattle()
+        {
+            while (!BattleComplete)
+            {
+                await runNextTurn();
+            }
+        }
+
+        public async Task runNextTurn()
         {
             Player playing = getCurrentActivePlayer();
             turnCount++;
-            playing.StartTurn();
+            await playing.StartTurn();
         }
 
         public Player getCurrentActivePlayer()
