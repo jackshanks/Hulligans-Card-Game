@@ -20,7 +20,7 @@ namespace BattleSystem
         /// <returns></returns>
         public static Card? LookupCard(int cardId)
         {
-            Card card = null;
+            Card? card = null;
             if (LibraryAccess.WaitOne())
             {
                 card = Library[cardId].Copy();
@@ -45,6 +45,10 @@ namespace BattleSystem
     {
         public int id;
 
+        public int physical;
+        public int tolerance;
+        public int intelligence;
+
         public List<(Condition,Effect)> conditions;
 
         public Card Copy()
@@ -54,8 +58,11 @@ namespace BattleSystem
 
         public Card(Card card)
         {
+            this.physical = card.physical;
+            this.tolerance = card.tolerance;
+            this.intelligence = card.intelligence;
             this.id = card.id;
-            this.conditions = card.conditions;
+            this.conditions = card.conditions.ToList();
         }
     }
 

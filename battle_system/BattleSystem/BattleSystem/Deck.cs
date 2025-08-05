@@ -45,7 +45,7 @@ namespace BattleSystem
     }
     public class Arena
     {
-        public List<Card> combatants;
+        public List<(Card,int)> combatants;
     }
     public class Field
     {

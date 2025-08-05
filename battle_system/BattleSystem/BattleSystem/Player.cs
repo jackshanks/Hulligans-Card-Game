@@ -45,11 +45,11 @@ namespace BattleSystem
             p.Drawn += EnemyDraw;
             p.Placed += EnemyPlace;
         }
-        public void InvokeEffect(Card c, Effect e)
+        public async Task InvokeEffect(Card c, Effect e)
         {
         }
 
-        public async void CheckInvoke(Condition condition)
+        public async Task CheckInvoke(Condition condition)
         {
             foreach (Card c in CardsActiveEffects)
             {
@@ -57,7 +57,7 @@ namespace BattleSystem
                 {
                     if (con.Item1 == condition)
                     {
-                        InvokeEffect(c, con.Item2);
+                        await InvokeEffect(c, con.Item2);
                     }
                 }
             }
@@ -84,39 +84,51 @@ namespace BattleSystem
         }
         public async Task ItemActivationPhase()
         {
+            int itemToActivate;
+            while (await PlayerController.AwaitItemActivation(out itemToActivate))
+            {
+                // activate item corrosponding to the int provided - does not limit activations in one turn
+            }
             await AttackPhase();
         }
         public async Task AttackPhase()
         {
+            int cardToAttackWith;
+            int cardToAttack;
+            while(await PlayerController.AwaitCardAttack(out cardToAttackWith,out cardToAttack))
+            {
+                //do attack
+            }
             await EndTurn();
         }
 
         public async Task EndTurn() 
         {
+            //cleanup turn
         }
 
-        public void EnemyTurnStart(object sender, EventArgs? e)
+        public async void EnemyTurnStart(object sender, EventArgs? e)
         {
-            CheckInvoke(Condition.onEnemyTurnStart);
+            await CheckInvoke(Condition.onEnemyTurnStart);
         }
-        public void EnemyTurnEnd(object sender, EventArgs? e)
+        public async void EnemyTurnEnd(object sender, EventArgs? e)
         {
-            CheckInvoke(Condition.onEnemyTurnEnd);
+            await CheckInvoke(Condition.onEnemyTurnEnd);
         }
 
-        public void EnemyDraw(object sender, EventArgs? e)
+        public async void EnemyDraw(object sender, EventArgs? e)
         {
-
+            
         }
-        public void EnemyPlace(object sender, EventArgs? e)
-        {
-
-        }
-        public void EnemyItemActivated(object sender, EventArgs? e)
+        public async void EnemyPlace(object sender, EventArgs? e)
         {
 
         }
-        public void EnemyAttackMade(object sender, EventArgs? e)
+        public async void EnemyItemActivated(object sender, EventArgs? e)
+        {
+
+        }
+        public async void EnemyAttackMade(object sender, EventArgs? e)
         {
 
         }
